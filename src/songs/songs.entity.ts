@@ -24,6 +24,11 @@ export class Song {
   @Column('text')
   lyrics: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: SongCategory,
+    default: SongCategory.Rock,
+    nullable: true,
+  })
   category: SongCategory;
 }

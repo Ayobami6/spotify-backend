@@ -1,0 +1,16 @@
+
+# Root endpoint
+GET http://localhost:3000/
+
+
+GET http://localhost:3000/songs
+
+
+# Get Song by ID
+
+GET http://localhost:3000/songs/:id
+
+# Create Song
+POST http://localhost:3000/songs
+
+# Update Song

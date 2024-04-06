@@ -25,6 +25,7 @@ import { Logger } from '@nestjs/common';
             password: configService.get('DB_PASSWORD'),
             database: configService.get('DB_DATABASE'),
             synchronize: true,
+            entities: [`${__dirname}/../**/**.entity{.ts,.js}`],
           });
           await newDataSource.initialize();
           console.log('Database connected successfully');

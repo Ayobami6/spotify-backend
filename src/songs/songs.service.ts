@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Song } from './songs.entity';
 
@@ -29,6 +29,14 @@ export class SongsService {
       });
       return await this.save(song);
     },
+
+    async findOneSong(id: number): Promise<Song> {
+      const song = await this.findOne({ where: { id: id } });
+      if (!song) {
+        throw new NotFoundException(`Song with ID ${id} not found`);
+      }
+      return song;
+    },
   });
 
   getAllSongs(): Promise<Song[]> {
@@ -37,5 +45,14 @@ export class SongsService {
 
   createSong(createSongDto): Promise<Song> {
     return this.songRepository.createSong(createSongDto);
+  }
+
+  findOneById(id: number): Promise<Song> {
+    try {
+      const song = this.songRepository.findOneSong(id);
+      return song;
+    } catch (error) {
+      throw new NotFoundException(`Song with ID ${id} not found`);
+    }
   }
 }

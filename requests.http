@@ -4,6 +4,13 @@ GET http://localhost:3000/songs
 
 # Create Song
 POST http://localhost:3000/songs
-
+{
+    "title": "Hover",
+    "artists": ["Jay", "bey"],
+    "releaseDate": "2024-04-06",
+    "album": "Jigga",
+    "duration": "2024-04-06",
+    "lyrics": "This is ...."
+}
 
 # Update Song

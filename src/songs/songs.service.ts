@@ -13,9 +13,29 @@ export class SongsService {
     async getSongs(): Promise<Song[]> {
       return await this.find();
     },
+
+    async createSong(createSongDto): Promise<Song> {
+      // lets destructure
+      const { title, artists, releaseDate, duration, album, lyrics, category } =
+        createSongDto;
+      const song = this.create({
+        title,
+        artists,
+        releaseDate,
+        duration,
+        album,
+        lyrics,
+        category,
+      });
+      return await this.save(song);
+    },
   });
 
   getAllSongs(): Promise<Song[]> {
     return this.songRepository.getSongs();
+  }
+
+  createSong(createSongDto): Promise<Song> {
+    return this.songRepository.createSong(createSongDto);
   }
 }

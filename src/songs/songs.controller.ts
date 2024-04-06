@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { Song } from './songs.entity';
+import { CreateSongDto } from './dto/create-song.dto';
 
 @Controller('songs')
 export class SongsController {
@@ -9,5 +10,10 @@ export class SongsController {
   @Get()
   getAllSongs(): Promise<Song[]> {
     return this.songService.getAllSongs();
+  }
+
+  @Post()
+  createSong(@Body() createSongDto: CreateSongDto): Promise<Song> {
+    return this.songService.createSong(createSongDto);
   }
 }

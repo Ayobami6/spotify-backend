@@ -1,11 +1,15 @@
 {
-	"folders": [
-		{
-			"path": "../.."
-		},
-		{
-			"path": "../../../../../WebstormProjects/task-management-backend"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../..",
+    },
+    {
+      "path": "../../../../../WebstormProjects/task-management-backend",
+    },
+    {
+      "name": "nestjs-graphql",
+      "path": "../../../nestjs-graphql",
+    },
+  ],
+  "settings": {},
 }

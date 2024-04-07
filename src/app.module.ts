@@ -6,7 +6,7 @@ import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from './datastore/typeorm.module';
 import { DatasourceModule } from './datasource/datasource.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

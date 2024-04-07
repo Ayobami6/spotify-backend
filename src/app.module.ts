@@ -9,7 +9,8 @@ import { DatasourceModule } from './datasource/datasource.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerService } from './logger.service';
-
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 @Module({
   controllers: [AppController],
   imports: [
@@ -22,6 +23,15 @@ import { LoggerService } from './logger.service';
     DatasourceModule,
     UserModule,
     AuthModule,
+    WinstonModule.forRoot({
+      transports: [
+        new winston.transports.File({
+          filename: 'error.log',
+          level: 'error',
+        }),
+        new winston.transports.Console(),
+      ],
+    }),
   ],
   providers: [AppService, LoggerService],
   exports: [LoggerService],

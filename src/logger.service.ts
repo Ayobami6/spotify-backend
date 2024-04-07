@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { trace } from 'console';
 import * as winston from 'winston';
 
 @Injectable()
@@ -12,7 +13,15 @@ export class LoggerService {
         winston.format.timestamp({
           format: 'YYYY-MM-DD HH:mm:ss',
         }),
-        winston.format.json(),
+        winston.format.errors({ stack: true }),
+        winston.format.printf(({ level, message, timestamp, stack }) => {
+          if (stack) {
+            // Include the stack trace in the log message
+            return `${timestamp} ${level}: ${message} - ${stack}`;
+          }
+          // If no stack trace, log the message as usual
+          return `${timestamp} ${level}: ${message}`;
+        }),
       ),
       defaultMeta: {
         date: new Date().toLocaleDateString(),
@@ -21,7 +30,14 @@ export class LoggerService {
         new winston.transports.Console({
           format: winston.format.combine(
             winston.format.colorize(),
-            winston.format.simple(),
+            winston.format.printf(({ level, message, timestamp, stack }) => {
+              if (stack) {
+                // Include the stack trace in the log message
+                return `${timestamp} ${level}: ${message} - ${stack}`;
+              }
+              // If no stack trace, log the message as usual
+              return `${timestamp} ${level}: ${message}`;
+            }),
           ),
         }),
         new winston.transports.File({ filename: 'error.log', level: 'error' }),

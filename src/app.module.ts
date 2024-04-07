@@ -6,6 +6,8 @@ import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from './datastore/typeorm.module';
 import { DatasourceModule } from './datasource/datasource.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [AppController],
@@ -17,6 +19,8 @@ import { DatasourceModule } from './datasource/datasource.module';
       isGlobal: true,
     }),
     DatasourceModule,
+    UserModule,
+    AuthModule,
   ],
   providers: [AppService],
 })

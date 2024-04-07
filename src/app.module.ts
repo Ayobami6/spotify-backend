@@ -8,6 +8,7 @@ import { TypeOrmModule } from './datastore/typeorm.module';
 import { DatasourceModule } from './datasource/datasource.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
+import { LoggerService } from './logger.service';
 
 @Module({
   controllers: [AppController],
@@ -22,7 +23,8 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     AuthModule,
   ],
-  providers: [AppService],
+  providers: [AppService, LoggerService],
+  exports: [LoggerService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

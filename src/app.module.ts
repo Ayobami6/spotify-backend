@@ -5,6 +5,7 @@ import { SongsModule } from './songs/songs.module';
 import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from './datastore/typeorm.module';
+import { DatasourceModule } from './datasource/datasource.module';
 
 @Module({
   controllers: [AppController],
@@ -15,6 +16,7 @@ import { TypeOrmModule } from './datastore/typeorm.module';
       envFilePath: [`.env.stage.${process.env.MACHINE}`],
       isGlobal: true,
     }),
+    DatasourceModule,
   ],
   providers: [AppService],
 })

@@ -1,30 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ArtistEntity } from 'src/artists/artist.entity';
 import { Song } from 'src/songs/songs.entity';
 import { DataSource } from 'typeorm';
 
 @Injectable()
 export class DatasourceService {
-  constructor(private dataSource: DataSource) {}
+  private artistRepository;
+  constructor(private dataSource: DataSource) {
+    this.artistRepository = this.dataSource.getRepository(ArtistEntity); // how can I get access to this
+  }
 
   songRepository = this.dataSource.getRepository(Song).extend({
     async getSongs(): Promise<Song[]> {
       return await this.find();
-    },
-
-    async createSong(createSongDto): Promise<Song> {
-      // lets destructure
-      const { title, artists, releaseDate, duration, album, lyrics, category } =
-        createSongDto;
-      const song = this.create({
-        title,
-        artists,
-        releaseDate,
-        duration,
-        album,
-        lyrics,
-        category,
-      });
-      return await this.save(song);
     },
 
     async findOneSong(id: number): Promise<Song> {

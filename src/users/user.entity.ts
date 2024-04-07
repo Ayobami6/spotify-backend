@@ -4,8 +4,10 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column()
   username: string;
+
   @Column()
   password: string;
 }

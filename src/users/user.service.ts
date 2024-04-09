@@ -1,15 +1,20 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { SignInUserDto } from './dto/signIn-credentials.dto';
+import { LoggerService } from 'src/logger.service';
 
 @Injectable()
 export class UserService {
   //  User repository
+  private logger = new Logger();
   private userRepository;
-  constructor(private dataSource: DataSource) {
+  constructor(
+    private dataSource: DataSource,
+    private loggerService: LoggerService,
+  ) {
     this.userRepository = this.dataSource.getRepository(UserEntity);
   }
 
@@ -26,6 +31,8 @@ export class UserService {
       return await this.userRepository.save(user);
     } catch (error) {
       if (error.code == 23505) {
+        this.loggerService.error(error.message, error);
+        this.logger.error(error.message, error.stack);
         throw new HttpException('Username already exists', HttpStatus.CONFLICT);
       }
     }

@@ -18,7 +18,7 @@ export class AppController {
     } catch (error) {
       // console.log(error.stack);
       this.loggerService.error(error.message, error);
-      // this.logger.error(error.message, error.stack);
+      this.logger.error(error.message, error.stack);
       return error.message;
     }
 

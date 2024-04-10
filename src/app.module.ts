@@ -10,6 +10,7 @@ import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerService } from './logger.service';
 import { WinstonModule } from 'nest-winston';
+import { ArtistModule } from './artists/artist.module';
 import * as winston from 'winston';
 @Module({
   controllers: [AppController],
@@ -23,6 +24,7 @@ import * as winston from 'winston';
     DatasourceModule,
     UserModule,
     AuthModule,
+    ArtistModule,
     WinstonModule.forRoot({
       transports: [
         new winston.transports.File({
@@ -32,6 +34,7 @@ import * as winston from 'winston';
         new winston.transports.Console(),
       ],
     }),
+    ArtistModule,
   ],
   providers: [AppService, LoggerService],
   exports: [LoggerService],

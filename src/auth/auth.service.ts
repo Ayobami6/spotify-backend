@@ -7,6 +7,7 @@ import { UserService } from 'src/users/user.service';
 import { DataSource } from 'typeorm';
 import { AccessTokenResponse, JwtPayload } from './interfaces/jwt.interface';
 import * as bcrypt from 'bcrypt';
+import { ArtistService } from 'src/artists/artist.service';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
     private userService: UserService,
     private dataSource: DataSource,
     private jwtService: JwtService,
+    private artistsService: ArtistService,
   ) {
     this.userRepository = this.dataSource.getRepository(UserEntity);
   }
@@ -29,7 +31,14 @@ export class AuthService {
       where: { username: username },
     });
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload: JwtPayload = { username };
+      // lets gte the artist first
+      const artist = await this.artistsService.findArtist(user.id);
+      let payload: JwtPayload;
+      if (artist) {
+        payload = { username, artistId: artist.id };
+      } else {
+        payload = { username };
+      }
       const accessToken: string = this.jwtService.sign(payload);
       return { accessToken };
     } else {

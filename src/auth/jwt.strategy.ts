@@ -10,7 +10,6 @@ import { DataSource } from 'typeorm';
 import { JwtPayload } from './interfaces/jwt.interface';
 import { UserEntity } from 'src/users/user.entity';
 import { ConfigService } from '@nestjs/config';
-import * as process from 'process';
 import { LoggerService } from 'src/logger.service';
 
 interface UserResponse {

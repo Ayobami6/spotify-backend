@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { ArtistEntity } from './artist.entity';
+import { UserEntity } from 'src/users/user.entity';
 
 @Injectable()
 export class ArtistService {
@@ -14,9 +15,11 @@ export class ArtistService {
     this.artistRepository = this.dataSource.getRepository(ArtistEntity);
   }
 
-  async createArtist(userId: number): Promise<ArtistEntity> {
+  async createArtist(user: UserEntity): Promise<ArtistEntity> {
     try {
-      const artist = await this.artistRepository.create(userId);
+      const artist = await this.artistRepository.create({
+        user,
+      });
       return await this.artistRepository.save(artist);
     } catch (error) {
       this.logger.error(error.message);

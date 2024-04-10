@@ -42,6 +42,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       const userObj = {
         id: user.id,
         username: user.username,
+        artistId: payload.artistId,
       };
       return userObj;
     } catch (error) {

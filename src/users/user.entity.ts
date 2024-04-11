@@ -12,4 +12,10 @@ export class UserEntity {
   @Column()
   @Exclude({ toPlainOnly: true })
   password: string;
+
+  @Column({ nullable: true, type: 'text' })
+  twoFASecret: string;
+
+  @Column({ default: false, type: 'boolean' })
+  enable2FA: boolean;
 }

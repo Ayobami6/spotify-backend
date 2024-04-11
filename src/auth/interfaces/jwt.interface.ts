@@ -6,3 +6,7 @@ export interface JwtPayload {
 export interface AccessTokenResponse {
   accessToken: string;
 }
+
+export interface Enable2FA {
+  secret: string;
+}

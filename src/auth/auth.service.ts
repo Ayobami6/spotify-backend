@@ -5,9 +5,14 @@ import { SignInUserDto } from 'src/users/dto/signIn-credentials.dto';
 import { UserEntity } from 'src/users/user.entity';
 import { UserService } from 'src/users/user.service';
 import { DataSource } from 'typeorm';
-import { AccessTokenResponse, JwtPayload } from './interfaces/jwt.interface';
+import {
+  AccessTokenResponse,
+  Enable2FA,
+  JwtPayload,
+} from './interfaces/jwt.interface';
 import * as bcrypt from 'bcrypt';
 import { ArtistService } from 'src/artists/artist.service';
+import * as speakeasy from 'speakeasy';
 
 @Injectable()
 export class AuthService {
@@ -44,5 +49,20 @@ export class AuthService {
     } else {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  // enable twofactor authentication secret
+  async enable2FA(userId: number): Promise<Enable2FA> {
+    const user = await this.userService.findAUserById(userId);
+    if (user.enable2FA) {
+      return { secret: user.twoFASecret };
+    }
+    const secret = speakeasy.generateSecret({ length: 20 });
+    console.log(secret);
+    const updateUser = await this.userService.updateUser(userId, {
+      twoFASecret: secret.base32,
+      enable2FA: true,
+    });
+    return { secret: updateUser.twoFASecret };
   }
 }

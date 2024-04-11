@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { SignInUserDto } from './dto/signIn-credentials.dto';
 import { LoggerService } from 'src/logger.service';
+import { UserUpdate } from './interface/user-update.types';
 
 @Injectable()
 export class UserService {
@@ -47,6 +48,29 @@ export class UserService {
       return user;
     } else {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  async findAUserById(userId: number): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    } else {
+      return user;
+    }
+  }
+
+  async updateUser(
+    userId: number,
+    userUpdateData: UserUpdate,
+  ): Promise<UserEntity> {
+    const user = await this.findAUserById(userId);
+    if (user) {
+      this.userRepository.merge(user, userUpdateData);
+      const updatedUser = await this.userRepository.save(user);
+      return updatedUser;
+    } else {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
   }
 }

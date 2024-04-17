@@ -65,5 +65,19 @@ export class AuthService {
     });
     return { secret: updateUser.twoFASecret };
   }
+
+  // add validate 2fa service
+  async validate2FA(userId: number, code: string): Promise<boolean> {
+    try {
+      const user = await this.userService.findAUserById(userId);
+      return speakeasy.totp.verify({
+        secret: user.twoFASecret,
+        encoding: 'base32',
+        token: code,
+      });
+    } catch (error) {
+      throw new HttpException('Invalid 2FA code', HttpStatus.UNAUTHORIZED);
+    }
+  }
 }
 // test commit

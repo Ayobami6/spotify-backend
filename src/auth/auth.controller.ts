@@ -37,4 +37,11 @@ export class AuthController {
       throw new InternalServerErrorException();
     }
   }
+  @Post('validate-2fa')
+  @UseGuards(AuthGuard('jwt'))
+  async validate2fa(@GetUser() user, @Body() body): Promise<boolean> {
+    const userId = user.id;
+    const code = body.code;
+    return this.authService.validate2FA(userId, code);
+  }
 }

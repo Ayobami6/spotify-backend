@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { LoggerService } from 'src/logger.service';
 import { ArtistService } from 'src/artists/artist.service';
+import { ApiKeyStrategy } from './apikey.strategy';
 
 @Module({
   imports: [
@@ -26,7 +27,13 @@ import { ArtistService } from 'src/artists/artist.service';
       },
     }),
   ],
-  providers: [AuthService, JwtStrategy, LoggerService, ArtistService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    LoggerService,
+    ArtistService,
+    ApiKeyStrategy,
+  ],
   controllers: [AuthController],
   exports: [JwtStrategy, PassportModule],
 })

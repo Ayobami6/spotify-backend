@@ -91,6 +91,13 @@ export class AuthService {
     }
   }
 
+  async validateUserByApiKey(apikey: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: { apiKey: apikey },
+    });
+    return user;
+  }
+
   async disable2FA(userId: number): Promise<boolean> {
     const user = await this.userService.updateUser(userId, {
       enable2FA: false,

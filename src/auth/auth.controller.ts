@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   InternalServerErrorException,
   Post,
   UseGuards,
@@ -12,6 +13,11 @@ import { SignInUserDto } from 'src/users/dto/signIn-credentials.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { Enable2FA } from './interfaces/jwt.interface';
+
+interface APIProfileResponse {
+  message: string;
+  user: UserEntity;
+}
 
 @Controller('auth')
 export class AuthController {
@@ -50,5 +56,14 @@ export class AuthController {
   async disable2fa(@GetUser() user): Promise<boolean> {
     const userId = user.id;
     return this.authService.disable2FA(userId);
+  }
+
+  @Get('profile')
+  @UseGuards(AuthGuard('bearer'))
+  getProfile(@GetUser() user): APIProfileResponse {
+    return {
+      message: 'This is an authentication with an APIKey',
+      user,
+    };
   }
 }

@@ -73,4 +73,15 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
   }
+
+  async disable2FA(userId: number): Promise<UserEntity> {
+    const user = await this.findAUserById(userId);
+    if (user) {
+      user.enable2FA = false;
+      const updatedUser = await this.userRepository.save(user);
+      return updatedUser;
+    } else {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+  }
 }

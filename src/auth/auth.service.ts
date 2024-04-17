@@ -30,7 +30,9 @@ export class AuthService {
     return await this.userService.createUser(createUser);
   }
 
-  async signIn(signIn: SignInUserDto): Promise<AccessTokenResponse> {
+  async signIn(
+    signIn: SignInUserDto,
+  ): Promise<AccessTokenResponse | { validate2FA: string; message: string }> {
     const { username, password } = signIn;
     const user = await this.userRepository.findOne({
       where: { username: username },
@@ -44,8 +46,17 @@ export class AuthService {
       } else {
         payload = { username };
       }
-      const accessToken: string = this.jwtService.sign(payload);
-      return { accessToken };
+      if (user.enable2FA && user.twoFASecret) {
+        return {
+          validate2FA: 'http://localhost:3000/auth/validate-2fa',
+          message:
+            'Send the code from your authenticator app to the provided url',
+        };
+      } else {
+        // generate access token
+        const accessToken: string = this.jwtService.sign(payload);
+        return { accessToken };
+      }
     } else {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
@@ -78,6 +89,14 @@ export class AuthService {
     } catch (error) {
       throw new HttpException('Invalid 2FA code', HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  async disable2FA(userId: number): Promise<boolean> {
+    const user = await this.userService.updateUser(userId, {
+      enable2FA: false,
+      twoFASecret: null,
+    });
+    return user.enable2FA;
   }
 }
 // test commit

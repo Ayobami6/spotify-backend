@@ -41,7 +41,14 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   async validate2fa(@GetUser() user, @Body() body): Promise<boolean> {
     const userId = user.id;
-    const code = body.code;
+    const { code } = body;
     return this.authService.validate2FA(userId, code);
+  }
+
+  @Post('disable-2fa')
+  @UseGuards(AuthGuard('jwt'))
+  async disable2fa(@GetUser() user): Promise<boolean> {
+    const userId = user.id;
+    return this.authService.disable2FA(userId);
   }
 }

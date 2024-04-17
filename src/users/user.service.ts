@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { SignInUserDto } from './dto/signIn-credentials.dto';
 import { LoggerService } from 'src/logger.service';
 import { UserUpdate } from './interface/user-update.types';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -28,6 +29,7 @@ export class UserService {
       const user = this.userRepository.create({
         username,
         password: hashedPassword,
+        apikey: uuid(),
       });
       return await this.userRepository.save(user);
     } catch (error) {
@@ -83,5 +85,12 @@ export class UserService {
     } else {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  async generateAPIKey(userId: number): Promise<string> {
+    const apiKey = uuid();
+    // find user by id
+    const user = await this.updateUser(userId, { apiKey });
+    return user.apiKey;
   }
 }

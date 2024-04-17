@@ -3,4 +3,6 @@ export interface UserUpdate {
   password?: string;
   twoFASecret?: string;
   enable2FA?: boolean;
+  apiKey?: string;
+  apiKeySecret?: string;
 }

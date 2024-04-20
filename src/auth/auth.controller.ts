@@ -13,7 +13,12 @@ import { SignInUserDto } from 'src/users/dto/signIn-credentials.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { Enable2FA } from './interfaces/jwt.interface';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 interface APIProfileResponse {
   message: string;
@@ -36,6 +41,11 @@ export class AuthController {
   }
 
   @Post('/signin')
+  @ApiOperation({ summary: 'Login user' })
+  @ApiResponse({
+    status: 200,
+    description: 'It will give you the access_token in the response',
+  })
   signIn(@Body() signUser: SignInUserDto): Promise<any> {
     return this.authService.signIn(signUser);
   }
@@ -67,6 +77,7 @@ export class AuthController {
 
   @Get('profile')
   @UseGuards(AuthGuard('bearer'))
+  @ApiBearerAuth('JWT-auth')
   getProfile(@GetUser() user): APIProfileResponse {
     return {
       message: 'This is an authentication with an APIKey',

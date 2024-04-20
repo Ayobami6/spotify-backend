@@ -13,6 +13,7 @@ import { SignInUserDto } from 'src/users/dto/signIn-credentials.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { Enable2FA } from './interfaces/jwt.interface';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 interface APIProfileResponse {
   message: string;
@@ -20,10 +21,16 @@ interface APIProfileResponse {
 }
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/signup')
+  @ApiOperation({ summary: 'Register New User' })
+  @ApiResponse({
+    status: 201,
+    description: 'User Created Successfully',
+  })
   signUp(@Body() createUser: CreateUserDto): Promise<UserEntity> {
     return this.authService.signUp(createUser);
   }

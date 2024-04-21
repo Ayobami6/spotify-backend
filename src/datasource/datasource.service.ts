@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ArtistEntity } from 'src/artists/artist.entity';
-import { Song } from 'src/songs/songs.entity';
+import { ArtistEntity } from '../artists/artist.entity';
+import { Song } from '../songs/songs.entity';
 import { DataSource } from 'typeorm';
 
 @Injectable()

@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { SongCategory } from './types';
-import { ArtistEntity } from 'src/artists/artist.entity';
+import { ArtistEntity } from '../artists/artist.entity';
 
 @Entity('songs')
 export class Song {

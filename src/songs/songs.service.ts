@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Song } from './songs.entity';
 import { CreateSongDto } from './dto/create-song.dto';
-import { DatasourceService } from 'src/datasource/datasource.service';
-import { ArtistEntity } from 'src/artists/artist.entity';
+import { DatasourceService } from '../datasource/datasource.service';
+import { ArtistEntity } from '../artists/artist.entity';
 
 export interface SongArtist {
   songsId: number;

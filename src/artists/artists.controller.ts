@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ArtistService } from './artist.service';
 import { ArtistEntity } from './artist.entity';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { UserEntity } from 'src/users/user.entity';
+import { GetUser } from '../auth/get-user.decorator';
+import { UserEntity } from '../users/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
 @UseGuards(AuthGuard('jwt'))

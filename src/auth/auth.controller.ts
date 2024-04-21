@@ -7,9 +7,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserEntity } from 'src/users/user.entity';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { SignInUserDto } from 'src/users/dto/signIn-credentials.dto';
+import { UserEntity } from '../users/user.entity';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { SignInUserDto } from '../users/dto/signIn-credentials.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { Enable2FA } from './interfaces/jwt.interface';

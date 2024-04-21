@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { ArtistEntity } from './artist.entity';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from '../users/user.entity';
 
 @Injectable()
 export class ArtistService {

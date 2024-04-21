@@ -11,3 +11,5 @@
 > - NestJs Configuration
 > - Config Validation with Joi most preferably- Skipped
 > - Webpack Hot reload Sk
+> - Deployment on Railway
+> - Jest

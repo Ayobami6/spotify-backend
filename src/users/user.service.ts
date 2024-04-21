@@ -4,7 +4,7 @@ import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { SignInUserDto } from './dto/signIn-credentials.dto';
-import { LoggerService } from 'src/logger.service';
+import { LoggerService } from '../logger.service';
 import { UserUpdate } from './interface/user-update.types';
 import { v4 as uuid } from 'uuid';
 

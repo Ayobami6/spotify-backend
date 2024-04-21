@@ -8,9 +8,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { DataSource } from 'typeorm';
 import { JwtPayload } from './interfaces/jwt.interface';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from '../users/user.entity';
 import { ConfigService } from '@nestjs/config';
-import { LoggerService } from 'src/logger.service';
+import { LoggerService } from '../logger.service';
 
 interface UserResponse {
   id: number;

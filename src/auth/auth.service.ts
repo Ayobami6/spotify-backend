@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { SignInUserDto } from 'src/users/dto/signIn-credentials.dto';
-import { UserEntity } from 'src/users/user.entity';
-import { UserService } from 'src/users/user.service';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { SignInUserDto } from '../users/dto/signIn-credentials.dto';
+import { UserEntity } from '../users/user.entity';
+import { UserService } from '../users/user.service';
 import { DataSource } from 'typeorm';
 import {
   AccessTokenResponse,
@@ -11,7 +11,7 @@ import {
   JwtPayload,
 } from './interfaces/jwt.interface';
 import * as bcrypt from 'bcrypt';
-import { ArtistService } from 'src/artists/artist.service';
+import { ArtistService } from '../artists/artist.service';
 import * as speakeasy from 'speakeasy';
 
 @Injectable()

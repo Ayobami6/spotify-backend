@@ -34,7 +34,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document); //3
   const PORT = process.env.PORT || 3000;
   await app.listen(PORT);
-  logger.log(`Application listening on port ${PORT}`);
+  logger.log(`Application is running on:  ${await app.getUrl()}`);
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

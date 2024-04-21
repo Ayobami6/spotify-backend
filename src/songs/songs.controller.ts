@@ -1,8 +1,19 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { Song } from './songs.entity';
 import { CreateSongDto } from './dto/create-song.dto';
+import { SongArtist } from './songs.service';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('songs')
 export class SongsController {
   constructor(private songService: SongsService) {}
@@ -21,4 +32,9 @@ export class SongsController {
   findOne(@Param('id') id: number): Promise<Song> {
     return this.songService.findOneById(id);
   }
+
+  // @Get()
+  // fetchAllSongArtistTable(): Promise<SongArtist[]> {
+  //   return this.songService.fetchAllSongArtistTable();
+  // }
 }

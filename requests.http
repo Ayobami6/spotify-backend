@@ -1,6 +1,7 @@
 
 # Root endpoint
-GET http://localhost:3000/songs
+GET http://localhost:3000/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkF5b2JhbWkwMDIzIiwiaWF0IjoxNzEyNzU3MzA2LCJleHAiOjE3MTI3NjA5MDZ9.Auo00zpaJOo4lt156yAPa9XGecmvqjhC_XMnohXe-cw
 
 # Create Song
 POST http://localhost:3000/songs
